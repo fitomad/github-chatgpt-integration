@@ -24,7 +24,7 @@ inputs:
   openai-max-tokens:  # id of input
     description: 'The maximum number of tokens to generate in the completion.'
     required: false
-    default: '2048'
+    default: '4096'
   mode:  # id of input
     description: 'How to capture PR changes. Options: files, patch'
     required: false

@@ -6,6 +6,8 @@ from github import Github
 
 github_client: Github
 
+REVIEW_PROMPT = "Act as a Swift developer and review this Swift code for potential bugs or Code Smells and suggest improvements."
+
 def files_from_pull_request(pr_id: int):
     repo = github_client.get_repo(os.getenv('GITHUB_REPOSITORY'))
     pull_request = repo.get_pull(pr_id)
@@ -22,7 +24,7 @@ def files_from_pull_request(pr_id: int):
 
             response = openai.Completion.create(
                 engine=args.openai_engine,
-                prompt=(f"Explain Code:\n```{content}```"),
+                prompt=(f"{REVIEW_PROMPT}:\n```{content}```"),
                 temperature=float(args.openai_temperature),
                 max_tokens=int(args.openai_max_tokens)
             )
@@ -91,9 +93,9 @@ if __name__ == "__main__":
     parser.add_argument('--openai-api-key', help='Your OpenAI API Key')
     parser.add_argument('--github-token', help='Your Github Token')
     parser.add_argument('--github-pr-id', help='Your Github PR ID')
-    parser.add_argument('--openai-engine', default="text-davinci-002", help='GPT-3 model to use. Options: text-davinci-002, text-babbage-001, text-curie-001, text-ada-001')
+    parser.add_argument('--openai-engine', default="text-davinci-003", help='GPT-3.5 model to use. Options: text-davinci-003, text-davinci-002, text-babbage-001, text-curie-001, text-ada-001')
     parser.add_argument('--openai-temperature', default=0.5, help='Sampling temperature to use. Higher values means the model will take more risks. Recommended: 0.5')
-    parser.add_argument('--openai-max-tokens', default=2048, help='The maximum number of tokens to generate in the completion.')
+    parser.add_argument('--openai-max-tokens', default=4096, help='The maximum number of tokens to generate in the completion.')
     parser.add_argument('--mode', default="files", help='PR interpretation form. Options: files, patch')
     
     args = parser.parse_args()
