@@ -8,3 +8,4 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       - run: echo Comentatio de un PR
+      - uses: actions/chatgpt_action@1.0.0
