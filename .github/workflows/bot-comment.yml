@@ -3,3 +3,7 @@ on:
   issue_comment:                                     
     types: [created, edited, deleted]
 jobs:
+  pr_launcher:
+    if: ${{ github.event.issue.pull_request }}
+      runs-on: [ubuntu-latest]
+      steps:
