@@ -1,9 +1,10 @@
 name: pull request comment
 on:
   issue_comment:                                     
-    types: [created, edited, deleted]
+    types: [created, edited ]
 jobs:
-  pr_launcher:
-    if: ${{ github.event.issue.pull_request }}
-      runs-on: [ubuntu-latest]
-      steps:
+  pr_commented:
+    if: ${{ github.event.issue.pull_request && matches(github.event.comment.body, "globant-bot please review this") }}
+    runs-on: [ubuntu-latest]
+    steps:
+      - run: echo Comentatio de un PR
