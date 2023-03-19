@@ -1,4 +1,4 @@
-name: pull request comment
+name: ChatGPT Pull Request comment trigger
 on:
   issue_comment:                                     
     types: [created, edited ]
@@ -7,5 +7,5 @@ jobs:
     if: ${{ github.event.issue.pull_request && matches(github.event.comment.body, "globant-bot please review this") }}
     runs-on: [ubuntu-latest]
     steps:
-      - run: echo Comentatio de un PR
-      - uses: actions/chatgpt_action@1.0.0
+      - run: echo Comentario de un PR
+      - uses: actions/chatgpt_action@1.0
