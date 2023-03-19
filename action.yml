@@ -14,7 +14,7 @@ inputs:
     required: true
     default: ''
   openai-engine:  # id of input
-    description: 'GPT-3 models can understand and generate natural language. We offer four main models with different levels of power suitable for different tasks. Davinci is the most capable model, and Ada is the fastest.'
+    description: 'GPT-3.5 models can understand and generate natural language. We offer four main models with different levels of power suitable for different tasks. Davinci is the most capable model, and Ada is the fastest.'
     required: false
     default: 'text-davinci-003'
   openai-temperature:  # id of input
