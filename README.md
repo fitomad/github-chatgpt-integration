@@ -12,6 +12,14 @@ We will obtain this integration thanks to GitHub actions. This repository contai
 
 * Pull Request checking and analizing, providing comments abou the repo.
 
+## GitHub Action 
+
+Our shell script must be executable. Make sure the `main.sh` file has execute permissions before using it in a workflow. You can modify the permission from your terminal using this command.
+
+```zsh
+chmod +x main.sh
+```
+
 ## Contact
 
 * **Email** [adolfo.vera@globant.com]()
