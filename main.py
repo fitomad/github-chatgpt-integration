@@ -6,13 +6,15 @@ from github import Github
 
 github_client: Github
 
-REVIEW_PROMPT = "Act as a Swift developer and review this Swift code for potential bugs or Code Smells and suggest improvements."
+REVIEW_PROMPT = "Act as a Swift developer. Review this Swift code for potential bugs or Code Smells and suggest improvements."
 
 def files_from_pull_request(pr_id: int):
     repo = github_client.get_repo(os.getenv('GITHUB_REPOSITORY'))
     pull_request = repo.get_pull(pr_id)
 
-    ## Loop through the commits in the pull request
+    resume = make_resume_for_pull_request(pr=pull_request_id)
+    pull_request.create_issue_comment(resume)
+
     commits = pull_request.get_commits()
 
     for commit in commits:
@@ -29,8 +31,7 @@ def files_from_pull_request(pr_id: int):
                 max_tokens=int(args.openai_max_tokens)
             )
 
-            pull_request.create_issue_comment(
-                f"ChatGPT's response about `{file.filename}`:\n {response['choices'][0]['text']}")
+            pull_request.create_issue_comment(f"ChatGPT's review about `{file.filename}` file:\n {response['choices'][0]['text']}")
 
 
 def patch_from_pull_request(pr_id: int):
@@ -62,8 +63,7 @@ def patch_from_pull_request(pr_id: int):
             print(response)
             print(response['choices'][0]['text'])
 
-            pull_request.create_issue_comment(
-                f"ChatGPT's response about ``{file_name}``:\n {response['choices'][0]['text']}")
+            pull_request.create_issue_comment(f"ChatGPT's response about ``{file_name}``:\n {response['choices'][0]['text']}")
         except Exception as e:
             error_message = str(e)
             print(error_message)
@@ -86,6 +86,18 @@ def get_content_patch_from_pull_request(pr_id: int):
 
     return response.text
 
+def make_resume_for_pull_request(pr: github.PullRequest.PullRequest) -> str:
+    comment = f"""
+    Starting review process for this pull request send by {pr.user.name}
+    Commits in this pull request: {pr.commits}
+
+    Additions: {pr.additions}
+    Changed files: {pr.changed_files}
+    Deletions: {pr.deletions}
+    """
+
+    return comment
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -100,10 +112,7 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
 
-    ## Authenticating with the OpenAI API
     openai.api_key = args.openai_api_key
-
-    ## Authenticating with the Github API
     github_client = Github(args.github_token)
 
     pull_request_id = int(args.github_pr_id)
