@@ -16,7 +16,7 @@ jobs:
     name: ChatGPT reviewer # Job name
     steps:
       - name: ChatGPT reviewer code # Step name
-        uses: fitomad/github-chatgpt-integration@v1.0 # Use the ChatGPT Github Actions from cirolini repository
+        uses: fitomad/github-chatgpt-integration@1.0 # Use the ChatGPT Github Actions from cirolini repository
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }} # Get the OpenAI API key from repository secrets
           github_token: ${{ secrets.GH_TOKEN }} # Get the Github Token from repository secrets
