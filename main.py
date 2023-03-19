@@ -86,7 +86,7 @@ def get_content_patch_from_pull_request(pr_id: int):
 
     return response.text
 
-def make_resume_for_pull_request(pr: github.PullRequest.PullRequest) -> str:
+def make_resume_for_pull_request(pr: PullRequest) -> str:
     comment = f"""
     Starting review process for this pull request send by {pr.user.name}
     Commits in this pull request: {pr.commits}
