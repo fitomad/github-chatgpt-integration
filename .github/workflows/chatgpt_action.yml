@@ -18,9 +18,9 @@ jobs:
       - name: ChatGPT reviewer code # Step name
         uses: fitomad/github-chatgpt-integration@1.1 # Use the ChatGPT Github Actions from cirolini repository
         with:
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }} # Get the OpenAI API key from repository secrets
-          github_token: ${{ secrets.GH_TOKEN }} # Get the Github Token from repository secrets
-          github_pr_id: ${{ github.event.number }} # Get the Github Pull Request ID from the Github event
-          openai_engine: "text-davinci-003" # Optional: specify the OpenAI engine to use. Default is "text-davinci-002"
-          openai_temperature: 0.5 # Optional: specify the sampling temperature for OpenAI. Default is 0.5
-          openai_max_tokens: 4096 # Optional: specify the maximum number of tokens to generate in OpenAI completion. Default is 2048 
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }} # Get the OpenAI API key from repository secrets
+          github-token: ${{ secrets.GH_TOKEN }} # Get the Github Token from repository secrets
+          github_-pr-id: ${{ github.event.number }} # Get the Github Pull Request ID from the Github event
+          openai-engine: "text-davinci-003" # Optional: specify the OpenAI engine to use. Default is "text-davinci-002"
+          openai-temperature: 0.5 # Optional: specify the sampling temperature for OpenAI. Default is 0.5
+          openai-max-tokens: 4096 # Optional: specify the maximum number of tokens to generate in OpenAI completion. Default is 2048 
