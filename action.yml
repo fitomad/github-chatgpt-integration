@@ -20,11 +20,11 @@ inputs:
   openai-engine:
     description: 'GPT-3.5 models can understand and generate natural language. We offer four main models with different levels of power suitable for different tasks. Davinci is the most capable model, and Ada is the fastest.'
     required: false
-    default: 'text-davinci-003'
+    default: 'gpt-3.5-turbo'
   openai-temperature:
     description: 'What sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.'
     required: false
-    default: '0.5'
+    default: '0.0'
   openai-max-tokens:
     description: 'The maximum number of tokens to generate in the completion.'
     required: false
