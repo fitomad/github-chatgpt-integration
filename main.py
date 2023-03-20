@@ -25,7 +25,7 @@ def code_review(parameters: dict):
 
             try:
                 response = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
+                    model=parameters['model'],
                     messages=[
                         {
                             "role" : "user",
