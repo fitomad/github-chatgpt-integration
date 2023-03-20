@@ -40,13 +40,15 @@ def make_prompt(dev_lang: str) -> str:
 
 def make_resume_for_pull_request(pr: PullRequest) -> str:
     comment = f"""
-    Starting review process for this pull request send by {pr.user.name}
-    Commits in this pull request: {pr.commits}
+    Starting review process for this pull request send by **{pr.user.name}**
+    **Commits** in this pull request: {pr.commits}
 
-    Additions: {pr.additions}
-    Changed files: {pr.changed_files}
-    Deletions: {pr.deletions}
+    **Additions**: {pr.additions}
+    **Changed** files: {pr.changed_files}
+    **Deletions**: {pr.deletions}
     """
+
+    comment = comment.format(length='multi-line', ordinal='second')
 
     return comment
 
