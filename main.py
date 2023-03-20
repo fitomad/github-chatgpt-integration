@@ -6,7 +6,7 @@ from github import Github, PullRequest
 
 github_client: Github
 
-def code_review(pr_id: int, chatgpt_prompt: str):
+def code_review(pr_id: int, chatgpt_prompt: str, temperature: float, tokens: int):
     repo = github_client.get_repo(os.getenv('GITHUB_REPOSITORY'))
     pull_request = repo.get_pull(pr_id)
 
@@ -25,8 +25,8 @@ def code_review(pr_id: int, chatgpt_prompt: str):
             response = openai.Completion.create(
                 engine=args.openai_engine,
                 prompt=(f"{chatgpt_prompt}:\n```{content}```"),
-                temperature=float(args.openai_temperature),
-                max_tokens=int(args.openai_max_tokens)
+                temperature=temperature,
+                max_tokens=tokens
             )
 
             pull_request.create_issue_comment(f"ChatGPT's review about `{file.filename}` file:\n {response['choices'][0]['text']}")
@@ -70,4 +70,7 @@ if __name__ == "__main__":
     pull_request_id = int(args.github_pr_id)
     prompt = make_prompt(dev_lang=args.dev_lang)
 
-    code_review(pr_id=pull_request_id, chatgpt_prompt=prompt)
+    temperature = float(args.openai_temperature)
+    max_tokens = int(args.openai_max_tokens)
+
+    code_review(pr_id=pull_request_id, chatgpt_prompt=prompt, temperature=temperature, tokens=max_tokens)
