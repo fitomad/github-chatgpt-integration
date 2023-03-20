@@ -1,34 +1,34 @@
 name: 'Code Review with ChatGPT'
 description: 'Automating code review using ChatGPT with Github Actions integration on PRs for code explanations.'
 inputs:
-  openai-api-key:  # id of input
+  openai-api-key:
     description: 'OpenAI API Key'
     required: true
     default: ''
-  github-token:  # id of input
+  github-token:
     description: 'Github API Key'
     required: true
     default: ''
-  github-pr-id:  # id of input
+  github-pr-id:
     description: 'Github Pull Request ID'
     required: true
     default: ''
-  openai-engine:  # id of input
+  dev-lang:
+    description: 'Development language used in this request'
+    required: true
+    default: ''
+  openai-engine:
     description: 'GPT-3.5 models can understand and generate natural language. We offer four main models with different levels of power suitable for different tasks. Davinci is the most capable model, and Ada is the fastest.'
     required: false
     default: 'text-davinci-003'
-  openai-temperature:  # id of input
+  openai-temperature:
     description: 'What sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.'
     required: false
     default: '0.5'
-  openai-max-tokens:  # id of input
+  openai-max-tokens:
     description: 'The maximum number of tokens to generate in the completion.'
     required: false
     default: '4096'
-  mode:  # id of input
-    description: 'How to capture PR changes. Options: files, patch'
-    required: false
-    default: 'files'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -36,7 +36,7 @@ runs:
     - ${{ inputs.openai-api-key }}
     - ${{ inputs.github-token }}
     - ${{ inputs.github-pr-id }}
+    - ${{ inputs.dev-lang }}
     - ${{ inputs.openai-engine }}
     - ${{ inputs.openai-temperature }}
     - ${{ inputs.openai-max-tokens }}
-    - ${{ inputs.mode }}
