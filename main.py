@@ -22,14 +22,18 @@ def code_review(pr_id: int, chatgpt_prompt: str, temperature: float, tokens: int
             filename = file.filename
             content = repo.get_contents(filename, ref=commit.sha).decoded_content
 
-            response = openai.Completion.create(
-                engine=args.openai_engine,
-                prompt=(f"{chatgpt_prompt}:\n```{content}```"),
-                temperature=temperature,
-                max_tokens=tokens
-            )
+            try:
+                response = openai.Completion.create(
+                    engine=args.openai_engine,
+                    prompt=(f"{chatgpt_prompt}:\n```{content}```"),
+                    temperature=temperature,
+                    max_tokens=tokens
+                )
 
-            pull_request.create_issue_comment(f"ChatGPT's review about `{file.filename}` file:\n {response['choices'][0]['text']}")
+                pull_request.create_issue_comment(f"ChatGPT's review about `{file.filename}` file:\n {response['choices'][0]['text']}")
+            except Exception as ex:
+                message = f"🚨 Fail code review process for file **{filename}**.\n\n`str(ex)`"
+                pull_request.create_issue_comment(message)
 
 
 def make_prompt(dev_lang: str) -> str:
