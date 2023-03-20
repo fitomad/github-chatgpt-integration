@@ -2,7 +2,7 @@ import argparse
 import openai
 import os
 import requests
-from github import Github
+from github import Github, PullRequest
 
 github_client: Github
 
@@ -10,7 +10,7 @@ def code_review(pr_id: int, chatgpt_prompt: str):
     repo = github_client.get_repo(os.getenv('GITHUB_REPOSITORY'))
     pull_request = repo.get_pull(pr_id)
 
-    resume = make_resume_for_pull_request(pr=pull_request_id)
+    resume = make_resume_for_pull_request(pr=pull_request)
     pull_request.create_issue_comment(resume)
 
     commits = pull_request.get_commits()
