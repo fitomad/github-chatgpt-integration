@@ -106,7 +106,7 @@ if __name__ == "__main__":
     parser.add_argument('--github-token', help='Your Github Token')
     parser.add_argument('--github-pr-id', help='Your Github PR ID')
     parser.add_argument('--openai-engine', default="text-davinci-003", help='GPT-3.5 model to use. Options: text-davinci-003, text-davinci-002, text-babbage-001, text-curie-001, text-ada-001')
-    parser.add_argument('--openai-temperature', default=0.5, help='Sampling temperature to use. Higher values means the model will take more risks. Recommended: 0.5')
+    parser.add_argument('--openai-temperature', default=0.0, help='Sampling temperature to use. Higher values means the model will take more risks. Recommended: 0.5')
     parser.add_argument('--openai-max-tokens', default=4096, help='The maximum number of tokens to generate in the completion.')
     parser.add_argument('--mode', default="files", help='PR interpretation form. Options: files, patch')
     
