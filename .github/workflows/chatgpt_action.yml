@@ -19,5 +19,5 @@ jobs:
           github-token: ${{ secrets.GH_TOKEN }}
           github-pr-id: ${{ github.event.number }}
           openai-engine: "text-davinci-003"
-          openai-temperature: 0.5
+          openai-temperature: 0.0
           openai-max-tokens: 4096 
