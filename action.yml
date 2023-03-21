@@ -1,5 +1,8 @@
 name: 'Code Review with ChatGPT'
 description: 'Automating code review using ChatGPT with Github Actions integration on PRs for code explanations.'
+branding:
+  icon: 'hexagon'
+  color: 'orange'
 inputs:
   openai-api-key:
     description: 'OpenAI API Key'
