@@ -1,5 +1,5 @@
-name: 'Code Review with ChatGPT'
-description: 'Automating code review using ChatGPT with Github Actions integration on PRs for code explanations.'
+name: 'The Code Reviewer'
+description: 'Automating code review using ChatGPT with Github Actions. Look for potential bugs and suggest code improvements in your pull request'
 branding:
   icon: 'hexagon'
   color: 'orange'
