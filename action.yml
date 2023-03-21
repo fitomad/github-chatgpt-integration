@@ -1,7 +1,7 @@
 name: 'The Code Reviewer'
 description: 'Automating code review using ChatGPT with Github Actions. Look for potential bugs and suggest code improvements in your PR'
 branding:
-  icon: 'hexagon'
+  icon: 'arrow-up-right'
   color: 'orange'
 inputs:
   openai-api-key:
