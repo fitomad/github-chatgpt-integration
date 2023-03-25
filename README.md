@@ -49,13 +49,16 @@ jobs:
 
 ## GitHub Action 
 
-Our shell script must be executable. Make sure the `main.sh` file has execute permissions before using it in a workflow. You can modify the permission from your terminal using this command.
+Our shell script must be executable. Make sure the `main.sh` file has execute permissions before using it in a workflow. You can modify the permission from your terminal using these commands.
+
+Using the `update-index` parameter we will be sure that the execution flag will not be reseted every time we fork or create a new branch.
 
 ```zsh
-chmod +x main.sh
+$ git add entrypoint.sh
+$ git update-index --chmod=+x entrypoint.sh
 ```
 
 ## Contact
 
-* **Email** [adolfo.vera@globant.com]()
-* **LinkedIn** [https://www.linkedin/com]()
+* **Email** [adolfo.vera@globant.com](mailto:adolfo.vera@globant.com)
+* **LinkedIn** [https://www.linkedin.com/in/adolfo-vera](https://www.linkedin.com/in/adolfo-vera)
