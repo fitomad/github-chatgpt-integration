@@ -17,11 +17,13 @@ We will obtain this integration thanks to GitHub actions. This repository contai
 You need to create two secrets in order to run this action
 
 * `OPENAI_API_KEY` Create an OpenAI developer account and obtain an API acces key
-* `GH_TOKEN` Create a GitHub developer access token
+* `GH_TOKEN` Create a GitHub developer access token or use a GitHub App token
 
 Other fields that you can customize are
 
 * `dev-lang` Define the programming language using in your repository
+
+### Using Personal Access Token (PAT)
 
 ```yaml
 name: App Code Review
@@ -46,6 +48,48 @@ jobs:
           dev-lang: Swift
           openai-max-tokens: 4096
 ```
+
+### Using GitHub App Token
+
+If you are using a GitHub App token (via `actions/create-github-app-token`), ensure your GitHub App has the following permissions:
+
+* **Repository permissions:**
+  - `contents: read` - To read repository contents
+  - `pull_requests: read` - To read pull requests
+  - `issues: write` - To create comments on pull requests
+
+Example workflow:
+
+```yaml
+name: App Code Review with GitHub App
+
+permissions:
+  contents: read
+  pull-requests: read
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ env.APP_ID }}
+          private-key: ${{ env.PRIVATE_KEY }}
+      - uses: fitomad/github-chatgpt-integration@main
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          github-token: ${{ steps.app-token.outputs.token }}
+          github-pr-id: ${{ github.event.number }}
+          dev-lang: c#
+          openai-max-tokens: 4096
+```
+
+**Important:** When configuring your GitHub App, make sure to grant the `issues: write` permission so the action can post comments on pull requests.
 
 ## GitHub Action 
 

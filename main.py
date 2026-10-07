@@ -12,7 +12,30 @@ def code_review(parameters: dict):
     pull_request = repo.get_pull(parameters["pr_id"])
 
     resume = make_resume_for_pull_request(pr=pull_request)
-    pull_request.create_issue_comment(resume)
+    
+    try:
+        pull_request.create_issue_comment(resume)
+    except Exception as ex:
+        error_message = str(ex)
+        if "Resource not accessible by integration" in error_message or "403" in error_message:
+            error_msg = (
+                "🚨 **Code Review Failed**\n\n"
+                "The GitHub token or app does not have the required permissions to post comments.\n\n"
+                "**For GitHub App tokens:**\n"
+                "- Ensure your GitHub App has the `issues: write` permission\n"
+                "- See the README for setup instructions\n\n"
+                "**For Personal Access Tokens:**\n"
+                "- Ensure the token has `repo` or `public_repo` scope\n"
+                f"\n**Error:** `{error_message}`"
+            )
+        else:
+            error_msg = f"🚨 Failed to post initial review comment.\n\n`{error_message}`"
+        
+        try:
+            pull_request.create_issue_comment(error_msg)
+        except:
+            print(f"Failed to post error message: {error_msg}")
+        raise
 
     commits = pull_request.get_commits()
 
@@ -38,7 +61,10 @@ def code_review(parameters: dict):
                 pull_request.create_issue_comment(f"ChatGPT's review about `{file.filename}` file:\n {response['choices'][0]['message']['content']}")
             except Exception as ex:
                 message = f"🚨 Fail code review process for file **{filename}**.\n\n`{str(ex)}`"
-                pull_request.create_issue_comment(message)
+                try:
+                    pull_request.create_issue_comment(message)
+                except:
+                    print(f"Failed to post error message for file {filename}: {str(ex)}")
 
 
 def make_prompt(dev_lang: str) -> str:
